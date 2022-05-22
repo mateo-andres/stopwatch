@@ -13,12 +13,13 @@ const buttonReset = document.getElementById("button-reset")
 buttonStart.addEventListener('click', ()=>{
     int = setInterval(displayTimer, 10)
     time.setAttribute("style", "background: white; color: #09b77c;")
-    // time.setAttribute("style", "color: #09b77c;")
+    buttonStart.setAttribute("disabled", "disable")
 })
 
 buttonPause.addEventListener('click', ()=>{
     clearInterval(int)
     time.setAttribute("style", "background: 09b77c; color: white;")
+    buttonStart.removeAttribute("disabled", "disable")
 })
 
 buttonReset.addEventListener('click', ()=>{
@@ -29,6 +30,7 @@ buttonReset.addEventListener('click', ()=>{
     hour = 0
     timer.innerHTML = '00 : 00 : 00'
     time.setAttribute("style", "background: 09b77c; color: white;")
+    buttonStart.removeAttribute("disabled", "disable")
 })
 
 function displayTimer(){
