@@ -1,46 +1,55 @@
-let seconds = 00
-let minutes = 00
+let milliseconds = 0
+let seconds = 0
+let minutes = 0
+let hour = 0
+let int
 
-const appendMinutes = document.getElementById("minutes")
-const appendSeconds = document.getElementById("seconds")
+const timer = document.getElementById("timer")
+const time = document.getElementById("time-container")
 const buttonStart = document.getElementById("button-start")
 const buttonPause = document.getElementById("button-pause")
 const buttonReset = document.getElementById("button-reset")
 
-let interval
+buttonStart.addEventListener('click', ()=>{
+    int = setInterval(displayTimer, 10)
+    time.setAttribute("style", "background: white; color: #09b77c;")
+    // time.setAttribute("style", "color: #09b77c;")
+})
 
-function startTimer() {
-    minutes ++
+buttonPause.addEventListener('click', ()=>{
+    clearInterval(int)
+    time.setAttribute("style", "background: 09b77c; color: white;")
+})
 
-    if (minutes<9) {
-        appendMinutes.innerHTML = "0" + minutes
-    }
-    if (minutes>9) {
-        appendMinutes.innerHTML = minutes
-    }
-    if (minutes > 99) {
-        seconds++
-        appendSeconds.innerHTML = "0" + seconds
-        minutes = 0
-        appendMinutes.innerHTML = "0" + 0
-    }
-    if (seconds > 9) {
-        appendSeconds.innerHTML = seconds
-    }
-}
+buttonReset.addEventListener('click', ()=>{
+    clearInterval(int)
+    milliseconds = 0
+    seconds = 0
+    minutes = 0
+    hour = 0
+    timer.innerHTML = '00 : 00 : 00'
+    time.setAttribute("style", "background: 09b77c; color: white;")
+})
 
-buttonStart.onclick = function (){
-    interval = setInterval(startTimer)
-}
-buttonPause.onclick = function (){
-    clearInterval(interval)
-}
-buttonReset.onclick = function(){
-    clearInterval(interval)
-    minutes = "00"
-    seconds = "00"
+function displayTimer(){
+    milliseconds+=10
+    if (milliseconds == 1000) {
+        milliseconds = 0
+        seconds ++
+        if (seconds == 60) {
+            seconds = 0
+            minutes++
+            if (minutes == 60) {
+                minutes = 0
+                hour ++
+            }
+        }
+    }
+    let h = hour < 10 ? "0" + hour : hour
+    let m = minutes < 10 ? "0" + minutes : minutes
+    let s = seconds <10 ? "0" + seconds : seconds 
+    // let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds<100 ? "0" + milliseconds : milliseconds
 
-    appendSeconds.innerHTML = seconds
-    appendMinutes.innerHTML = minutes
+    timer.innerHTML = `${h} : ${m} : ${s}`
 }
 
